@@ -1,5 +1,7 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
+using BookPaymentByCamera.Repo.Implements;
+using BookPaymentByCamera.Repo.Interfaces;
 using IronOcr;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -22,13 +24,20 @@ namespace BookPaymentByCamera
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public class BookDTO
+    {
+        public string bookName { get; set; }
+        public decimal bookPrice {  get; set; }
+        public string authorName {  get; set; }
+        public string publisherName {  get; set; }
+    }
     public partial class MainWindow : Window
     {
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
         private System.Timers.Timer captureTimer;
         private System.Timers.Timer stopTimer;
-
+        private IUnitOfWork unitOfWork = new UnitOfWork();
         public MainWindow()
         {
             InitializeComponent();
@@ -246,7 +255,19 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
-
+                    foreach(var item in ocrList)
+                    {
+                        if (!string.IsNullOrEmpty(item))
+                        {
+                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author, Publisher").FirstOrDefault();
+                            if (check != null)
+                            {
+                                List<BookDTO> listBooks = new List<BookDTO>();
+                                listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name});
+                                lvPayment.ItemsSource = listBooks;
+                            }
+                        }
+                    }
                 }
 
                 else

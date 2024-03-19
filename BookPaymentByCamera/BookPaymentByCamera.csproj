@@ -28,4 +28,8 @@
     <Folder Include="CapturedImages\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\BookPaymentByCamera.Repo\BookPaymentByCamera.Repo.csproj" />
+  </ItemGroup>
+
 </Project>
