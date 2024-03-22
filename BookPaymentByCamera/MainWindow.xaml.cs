@@ -255,18 +255,18 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
-                    foreach(var item in ocrList)
+				    foreach (var item in ocrList)
                     {
                         if (!string.IsNullOrEmpty(item))
                         {
-                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author, Publisher").FirstOrDefault();
-                            if (check != null)
-                            {
-                                List<BookDTO> listBooks = new List<BookDTO>();
-                                listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name});
-                                lvPayment.ItemsSource = listBooks;
-                            }
-                        }
+							var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
+							if (check != null)
+							{
+								List<BookDTO> listBooks = new List<BookDTO>();
+								listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
+								lvDetail.ItemsSource = listBooks;
+							}
+						}
                     }
                 }
 

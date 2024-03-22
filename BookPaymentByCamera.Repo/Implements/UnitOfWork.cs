@@ -15,7 +15,7 @@ namespace BookPaymentByCamera.Repo.Implements
         private  IGenericRepository<Author> AuthorRepo;
         private  IGenericRepository<Book> BookRepo;
         private IGenericRepository<Publisher> PublisherRepo;
-        private readonly PRN2212024DBContext _dbContext;
+        private readonly PRN2212024DBContext _dbContext = new PRN2212024DBContext();
         public UnitOfWork()
         {
             
