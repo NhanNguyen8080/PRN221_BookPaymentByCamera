@@ -1,0 +1,14 @@
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\bin\Debug\net6.0\BookPaymentByCamera.Repo.deps.json
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\bin\Debug\net6.0\BookPaymentByCamera.Repo.runtimeconfig.json
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\bin\Debug\net6.0\BookPaymentByCamera.Repo.dll
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\bin\Debug\net6.0\BookPaymentByCamera.Repo.pdb
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.csproj.AssemblyReference.cache
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.GeneratedMSBuildEditorConfig.editorconfig
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.AssemblyInfoInputs.cache
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.AssemblyInfo.cs
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.csproj.CoreCompileInputs.cache
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.dll
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\refint\BookPaymentByCamera.Repo.dll
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.pdb
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\BookPaymentByCamera.Repo.genruntimeconfig.cache
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera.Repo\obj\Debug\net6.0\ref\BookPaymentByCamera.Repo.dll

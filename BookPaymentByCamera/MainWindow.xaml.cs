@@ -172,55 +172,6 @@ namespace BookPaymentByCamera
         //}
 
 
-        private void Capture(object sender, ElapsedEventArgs e)
-        {
-            Dispatcher.Invoke(() =>
-            {
-                if (videoSource.IsRunning && videoSource != null)
-                {
-                    Thread.Sleep(1000);
-                    if (imgWebcam.Source != null && imgWebcam.Source is BitmapSource bitmapSource)
-                    {
-
-                        var encoder = new PngBitmapEncoder();
-                        encoder.Frames.Add(BitmapFrame.Create(bitmapSource));
-
-                        var randomString = Guid.NewGuid().ToString().Substring(0, 32);
-                        var fileName = $"{randomString}_{DateTime.Now:yyyyMMddHHmmSS}.png";
-                        string workingDirectory = Environment.CurrentDirectory;
-                        var rootFolderPath = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
-                        var folderPath = System.IO.Path.Combine(rootFolderPath, "CapturedImages");
-                        var filePath = System.IO.Path.Combine(folderPath, fileName);
-
-                        if (!Directory.Exists(folderPath))
-                        {
-                            Directory.CreateDirectory(folderPath);
-                        }
-
-                        using (var fileStream = new FileStream(filePath, FileMode.Create))
-                        {
-                            encoder.Save(fileStream);
-                        }
-
-                        //System.Windows.MessageBox.Show($"Image saved to: {filePath}");
-
-                        //lvImage.ItemsSource = null;
-                        //List<ImageModel> list = GetImageModels(txtBrowse.Text);
-                        //lvImage.ItemsSource = list;
-                    }
-
-                    else
-                    {
-                        System.Windows.MessageBox.Show($"No image to save!");
-                    }
-                }
-                else
-                {
-                    System.Windows.MessageBox.Show($"Your webcam is closing!");
-                }
-            });
-        }
-
         private void btnCapture_Click(object sender, EventArgs e)
         {
 
@@ -255,19 +206,20 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
+                    List<BookDTO> listBooks = new List<BookDTO>();
 				    foreach (var item in ocrList)
                     {
                         if (!string.IsNullOrEmpty(item))
                         {
-							var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
+                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains(item.ToLower()), null, "Author,Publisher").FirstOrDefault();
 							if (check != null)
 							{
-								List<BookDTO> listBooks = new List<BookDTO>();
 								listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
-								lvDetail.ItemsSource = listBooks;
 							}
 						}
                     }
+                    lvDetail.ItemsSource = listBooks;
+
                 }
 
                 else
@@ -292,7 +244,12 @@ namespace BookPaymentByCamera
 
             string[] lines = result.Text.Split(new char[] { '\n' });
             List<string> resultList = new List<string>(lines);
-            return resultList;
+            List<string> cleanedList = new List<string>();
+            foreach (var word in resultList)
+            {
+                cleanedList.Add(word.Replace("\r", ""));
+            }
+            return cleanedList;
         }
 
         //private void PaymentCheck()
