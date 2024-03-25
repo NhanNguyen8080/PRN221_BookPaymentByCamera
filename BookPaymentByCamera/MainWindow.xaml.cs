@@ -27,9 +27,15 @@ namespace BookPaymentByCamera
     public class BookDTO
     {
         public string bookName { get; set; }
-        public decimal bookPrice {  get; set; }
-        public string authorName {  get; set; }
-        public string publisherName {  get; set; }
+        public decimal bookPrice { get; set; }
+        public string authorName { get; set; }
+        public string publisherName { get; set; }
+    }
+
+    public class BookDTOPayment
+    {
+        public string bookName { get; set; }
+        public decimal bookPrice { get; set; }
     }
     public partial class MainWindow : Window
     {
@@ -44,7 +50,9 @@ namespace BookPaymentByCamera
             btnCapture.IsEnabled = false;
             lvImage.ItemsSource = null;
             List<ImageModel> list = GetImageModels("D:\\StudyDocuments\\PRN221\\GroupProject\\BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages");
+            //List<ImageModel> list = GetImageModels("C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera\\CapturedImages");
             lvImage.ItemsSource = list;
+
         }
 
         private void btnStartStop_Click(object sender, RoutedEventArgs e)
@@ -143,7 +151,7 @@ namespace BookPaymentByCamera
             }
 
             return null;
-            
+
         }
         //private void InitializeTimer()
         //{
@@ -255,18 +263,21 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
-				    foreach (var item in ocrList)
+                    foreach (var item in ocrList)
                     {
                         if (!string.IsNullOrEmpty(item))
                         {
-							var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
-							if (check != null)
-							{
-								List<BookDTO> listBooks = new List<BookDTO>();
-								listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
-								lvDetail.ItemsSource = listBooks;
-							}
-						}
+                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
+                            if (check != null)
+                            {
+                                List<BookDTO> listBooks = new List<BookDTO>();
+                                List<BookDTOPayment> listBooksPayment = new List<BookDTOPayment>();
+                                listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
+                                listBooksPayment.Add(new BookDTOPayment() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice });
+                                lvDetail.ItemsSource = listBooks;
+                                lvPayment.ItemsSource = listBooksPayment;
+                            }
+                        }
                     }
                 }
 
@@ -304,7 +315,7 @@ namespace BookPaymentByCamera
         //        {
         //            books.Add(new BookDTO
         //            {
-                        
+
         //            });
         //        }
         //    }
@@ -376,8 +387,11 @@ namespace BookPaymentByCamera
             // Generate PDF from HTML content
             var pdfDoc = pdf.RenderHtmlAsPdf(htmlContent);
 
+            // Specify the full path to the directory where you want to save the PDF file
+            string pdfFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "invoice.pdf");
+
             // Save PDF to file
-            pdfDoc.SaveAs("invoice.pdf");
+            pdfDoc.SaveAs(pdfFilePath);
         }
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
@@ -393,6 +407,8 @@ namespace BookPaymentByCamera
 
                     // Get invoice pdf file
                     SaveToPDF(lvPayment);
+
+
 
                     // Iterate through each file and delete it
                     foreach (string file in files)
@@ -416,5 +432,7 @@ namespace BookPaymentByCamera
                 System.Windows.MessageBox.Show($"An error occurred: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+
     }
 }
