@@ -43,7 +43,9 @@
       <ListView.View>
         <GridView>
           <GridViewColumn DisplayMemberBinding="{Binding bookName}" Header="Book Name" Width="180"/>
-          <GridViewColumn DisplayMemberBinding="{Binding bookPrice}" Header="Price" Width="180"/>
+          <GridViewColumn DisplayMemberBinding="{Binding bookPrice}" Header="Price" Width="50"/>
+          <GridViewColumn DisplayMemberBinding="{Binding authorName}" Header="Author" Width="120"/>
+          <GridViewColumn DisplayMemberBinding="{Binding publisherName}" Header="Publisher" Width="200"/>
         </GridView>
       </ListView.View>
     </ListView>
