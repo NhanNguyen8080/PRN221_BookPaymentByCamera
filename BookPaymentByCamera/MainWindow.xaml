@@ -31,6 +31,11 @@
         <ListView x:Name="lvPayment" Margin="585,10,10,339" Grid.Column="4">
             <ListView.View>
                 <GridView>
+                    <GridViewColumn Header="Book ID" Width="100" DisplayMemberBinding="{Binding Path=BookId}"/>
+                    <GridViewColumn Header="Book Name" Width="100" DisplayMemberBinding="{Binding Path=BookName}"/>
+                    <GridViewColumn Header="Book Price" Width="100" DisplayMemberBinding="{Binding Path=BookPrice}"/>
+                    <GridViewColumn Header="Author ID" Width="100" DisplayMemberBinding="{Binding Path=AuthorId}"/>
+                    <GridViewColumn Header="Publisher ID" Width="100" DisplayMemberBinding="{Binding Path=PublisherId}"/>
                 </GridView>
             </ListView.View>
         </ListView>
