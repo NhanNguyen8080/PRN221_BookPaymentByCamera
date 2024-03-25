@@ -1,5 +1,7 @@
 ﻿using AForge.Video;
 using AForge.Video.DirectShow;
+using BookPaymentByCamera.Repo.Implements;
+using BookPaymentByCamera.Repo.Interfaces;
 using IronOcr;
 using System.Drawing;
 using System.Drawing.Imaging;
@@ -22,13 +24,20 @@ namespace BookPaymentByCamera
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
+    public class BookDTO
+    {
+        public string bookName { get; set; }
+        public decimal bookPrice {  get; set; }
+        public string authorName {  get; set; }
+        public string publisherName {  get; set; }
+    }
     public partial class MainWindow : Window
     {
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
         private System.Timers.Timer captureTimer;
         private System.Timers.Timer stopTimer;
-
+        private IUnitOfWork unitOfWork = new UnitOfWork();
         public MainWindow()
         {
             InitializeComponent();
@@ -246,7 +255,19 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
-
+				    foreach (var item in ocrList)
+                    {
+                        if (!string.IsNullOrEmpty(item))
+                        {
+							var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
+							if (check != null)
+							{
+								List<BookDTO> listBooks = new List<BookDTO>();
+								listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
+								lvDetail.ItemsSource = listBooks;
+							}
+						}
+                    }
                 }
 
                 else
@@ -274,6 +295,91 @@ namespace BookPaymentByCamera
             return resultList;
         }
 
+        //private void PaymentCheck()
+        //{
+        //    List<BookDTO> books = new List<BookDTO>();
+        //    foreach (var item in lvPayment.Items)
+        //    {
+        //        if (!(item == null))
+        //        {
+        //            books.Add(new BookDTO
+        //            {
+                        
+        //            });
+        //        }
+        //    }
+
+        //    //save invoice
+        //    string invoiceFilePath = SaveInvoiceToPdf(books);
+        //    // Reset payment list
+        //    lvPayment.Items.Clear();
+        //    // Open the invoice PDF
+        //    if (File.Exists(invoiceFilePath))
+        //    {
+        //        System.Diagnostics.Process.Start(invoiceFilePath);
+        //    }
+        //    else
+        //    {
+        //        System.Windows.MessageBox.Show("Invoice not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+        //    }
+        //}
+
+        //private string SaveInvoiceToPdf(List<BookDTO> books)
+        //{
+        //    // Create a new PDF document
+        //    var pdf = new IronPdf.ChromePdfRenderer();
+
+        //    // Construct HTML content for the invoice
+        //    string htmlContent = "<h1>Invoice</h1><table><tr><th>Book Name</th><th>Author</th><th>Publisher</th><th>Price</th></tr>";
+        //    foreach (var book in books)
+        //    {
+        //        htmlContent += $"<tr><td>{book.bookName}</td><td>{book.authorName}</td><td>{book.publisherName}</td><td>{book.bookPrice}</td></tr>";
+        //    }
+        //    htmlContent += "</table>";
+
+        //    // Save HTML content to PDF file
+        //    string invoiceFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "invoice.pdf");
+        //    pdf.RenderHtmlAsPdf(htmlContent).SaveAs(invoiceFilePath);
+
+        //    return invoiceFilePath;
+        //}
+
+        // Method to save ListView data to PDF
+        private void SaveToPDF(System.Windows.Controls.ListView listView)
+        {
+            // Create a new PDF document
+            var pdf = new IronPdf.ChromePdfRenderer();
+
+            // Create HTML content for PDF
+            string htmlContent = "<html><head><title>Invoice</title></head><body><h1>Invoice</h1><table border='1'><tr>";
+
+            // Add header row
+            foreach (GridViewColumn column in ((GridView)listView.View).Columns)
+            {
+                htmlContent += "<th>" + column.Header + "</th>";
+            }
+            htmlContent += "</tr>";
+
+            // Add data rows
+            foreach (object item in listView.Items)
+            {
+                htmlContent += "<tr>";
+                foreach (var property in item.GetType().GetProperties())
+                {
+                    htmlContent += "<td>" + property.GetValue(item) + "</td>";
+                }
+                htmlContent += "</tr>";
+            }
+
+            htmlContent += "</table></body></html>";
+
+            // Generate PDF from HTML content
+            var pdfDoc = pdf.RenderHtmlAsPdf(htmlContent);
+
+            // Save PDF to file
+            pdfDoc.SaveAs("invoice.pdf");
+        }
+
         private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
             var folderPath = "D:\\StudyDocuments\\PRN221\\GroupProject\\BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages";
@@ -284,6 +390,9 @@ namespace BookPaymentByCamera
                 {
                     // Get all files in the folder
                     string[] files = Directory.GetFiles(folderPath);
+
+                    // Get invoice pdf file
+                    SaveToPDF(lvPayment);
 
                     // Iterate through each file and delete it
                     foreach (string file in files)
