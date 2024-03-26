@@ -34,25 +34,33 @@ namespace BookPaymentByCamera
 
     public class BookDTOPayment
     {
-        public string bookName { get; set; }
-        public decimal bookPrice { get; set; }
+        public string BookName { get; set; }
+        public decimal BookPrice { get; set; }
     }
     public partial class MainWindow : Window
     {
         private FilterInfoCollection videoDevices;
         private VideoCaptureDevice videoSource;
-        private System.Timers.Timer captureTimer;
-        private System.Timers.Timer stopTimer;
         private IUnitOfWork unitOfWork = new UnitOfWork();
+        List<BookDTO> listBooks;
+        List<BookDTOPayment> listBooksPayment;
+        string workingDirectory;
+        string rootFolderPath;
+        string folderPath;
+
         public MainWindow()
         {
             InitializeComponent();
             btnCapture.IsEnabled = false;
             lvImage.ItemsSource = null;
-            List<ImageModel> list = GetImageModels("D:\\StudyDocuments\\PRN221\\GroupProject\\BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages");
+            workingDirectory = Environment.CurrentDirectory;
+            rootFolderPath = Directory.GetParent(workingDirectory).Parent.Parent.FullName;
+            folderPath = System.IO.Path.Combine(rootFolderPath, "CapturedImages");
+            List<ImageModel> list = GetImageModels(folderPath);
             //List<ImageModel> list = GetImageModels("C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera\\CapturedImages");
             lvImage.ItemsSource = list;
-
+            listBooks = new List<BookDTO>();
+            listBooksPayment = new List<BookDTOPayment>();
         }
 
         private void btnStartStop_Click(object sender, RoutedEventArgs e)
@@ -84,10 +92,7 @@ namespace BookPaymentByCamera
                 }
                 btnStartStop.Content = "Start";
                 btnCapture.IsEnabled = false;
-                //captureTimer.Stop();
-                //captureTimer.Dispose();
             }
-            //InitializeTimer();
 
         }
 
@@ -153,32 +158,6 @@ namespace BookPaymentByCamera
             return null;
 
         }
-        //private void InitializeTimer()
-        //{
-        //    // Set the capture interval to 1 second (1000 milliseconds)
-        //    int captureInterval = 1000 / 60;
-
-        //    captureTimer = new System.Timers.Timer(captureInterval);
-        //    //captureTimer.Interval = TimeSpan.FromMilliseconds(captureInterval);
-        //    captureTimer.Elapsed += Capture;
-        //    captureTimer.Start();
-
-        //    // Set the stop interval to 1 second (1000 milliseconds)
-        //    int stopInterval = 1000;
-
-        //    stopTimer = new System.Timers.Timer(stopInterval);
-        //    stopTimer.Elapsed += StopCaptureTimer;
-        //    stopTimer.Start();
-        //}
-
-        //private void StopCaptureTimer(object sender, ElapsedEventArgs e)
-        //{
-        //    // Stop the captureTimer after 1 second
-        //    captureTimer.Stop();
-        //    stopTimer.Stop();
-        //    stopTimer.Dispose();
-        //}
-
 
         private void btnCapture_Click(object sender, EventArgs e)
         {
@@ -214,24 +193,30 @@ namespace BookPaymentByCamera
                     lvImage.ItemsSource = list;
 
                     var ocrList = OcrScan(filePath);
-                    List<BookDTO> listBooks = new List<BookDTO>();
+                    
 				    foreach (var item in ocrList)
                     {
                         if (!string.IsNullOrEmpty(item))
                         {
-                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains("harry".ToLower()), null, "Author,Publisher").FirstOrDefault();
+                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains(item.ToLower()), null, "Author,Publisher").FirstOrDefault();
                             if (check != null)
                             {
-                                List<BookDTO> listBooks = new List<BookDTO>();
-                                List<BookDTOPayment> listBooksPayment = new List<BookDTOPayment>();
                                 listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
-                                listBooksPayment.Add(new BookDTOPayment() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice });
-                                lvPayment.ItemsSource = listBooksPayment;
+                                listBooksPayment.Add(new BookDTOPayment() { BookName = check.BookName, BookPrice = (decimal)check.BookPrice });
+                                
                             }
                         }
                     }
+                    lvPayment.ItemsSource = null;
+                    lvDetail.ItemsSource = null;
+                    lvPayment.ItemsSource = listBooksPayment;
                     lvDetail.ItemsSource = listBooks;
-
+                    decimal totalPrice = 0;
+                    foreach(var price in listBooksPayment)
+                    {
+                        totalPrice += price.BookPrice;
+                    }
+                    lblTotalPrice.Content = totalPrice.ToString();
                 }
 
                 else
@@ -354,7 +339,6 @@ namespace BookPaymentByCamera
 
         private void btnPayment_Click(object sender, RoutedEventArgs e)
         {
-            var folderPath = "D:\\StudyDocuments\\PRN221\\GroupProject\\BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages";
             try
             {
                 // Check if the folder exists
