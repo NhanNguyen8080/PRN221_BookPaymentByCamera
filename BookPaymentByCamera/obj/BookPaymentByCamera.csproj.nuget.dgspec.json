@@ -145,6 +145,10 @@
               "target": "Package",
               "version": "[2024.3.4, )"
             },
+            "IronOcr.Languages.Vietnamese": {
+              "target": "Package",
+              "version": "[2020.11.2, )"
+            },
             "IronPdf": {
               "target": "Package",
               "version": "[2024.3.4, )"

@@ -6,5 +6,6 @@
     <Import Project="$(NuGetPackageRoot)ironsoftware.native.pdfmodel\2024.3.24\buildTransitive\netstandard2.0\IronSoftware.Native.PdfModel.targets" Condition="Exists('$(NuGetPackageRoot)ironsoftware.native.pdfmodel\2024.3.24\buildTransitive\netstandard2.0\IronSoftware.Native.PdfModel.targets')" />
     <Import Project="$(NuGetPackageRoot)ironpdf.native.chrome.windows\2024.3.24\buildTransitive\netstandard2.0\IronPdf.Native.Chrome.Windows.targets" Condition="Exists('$(NuGetPackageRoot)ironpdf.native.chrome.windows\2024.3.24\buildTransitive\netstandard2.0\IronPdf.Native.Chrome.Windows.targets')" />
     <Import Project="$(NuGetPackageRoot)ironocr\2024.3.4\buildTransitive\net6.0\IronOcr.targets" Condition="Exists('$(NuGetPackageRoot)ironocr\2024.3.4\buildTransitive\net6.0\IronOcr.targets')" />
+    <Import Project="$(NuGetPackageRoot)ironocr.languages.vietnamese\2020.11.2\build\IronOcr.Languages.Vietnamese.targets" Condition="Exists('$(NuGetPackageRoot)ironocr.languages.vietnamese\2020.11.2\build\IronOcr.Languages.Vietnamese.targets')" />
   </ImportGroup>
 </Project>

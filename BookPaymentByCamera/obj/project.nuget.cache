@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "+CbX6Z+sBQ5nCyH218nSb+dVTSryVJkEkkeIpP9tgEz623tmojEZ7imjOpVRX5Ge8XFQtfOxrnHygu2adWEW3A==",
+  "dgSpecHash": "Ju5jGo8P5rYjf9+OjisVQbOw2DsxrYPh9OI6HB5P4LSFP2WujW5gH+g42gkK5YxE04sI2a2AtdwFfXixPzBT5g==",
   "success": true,
   "projectFilePath": "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera\\BookPaymentByCamera.csproj",
   "expectedPackageFiles": [
@@ -21,6 +21,7 @@
     "C:\\Users\\talax\\.nuget\\packages\\grpc.net.client\\2.53.0\\grpc.net.client.2.53.0.nupkg.sha512",
     "C:\\Users\\talax\\.nuget\\packages\\grpc.net.common\\2.53.0\\grpc.net.common.2.53.0.nupkg.sha512",
     "C:\\Users\\talax\\.nuget\\packages\\ironocr\\2024.3.4\\ironocr.2024.3.4.nupkg.sha512",
+    "C:\\Users\\talax\\.nuget\\packages\\ironocr.languages.vietnamese\\2020.11.2\\ironocr.languages.vietnamese.2020.11.2.nupkg.sha512",
     "C:\\Users\\talax\\.nuget\\packages\\ironpdf\\2024.3.4\\ironpdf.2024.3.4.nupkg.sha512",
     "C:\\Users\\talax\\.nuget\\packages\\ironpdf.native.chrome.windows\\2024.3.24\\ironpdf.native.chrome.windows.2024.3.24.nupkg.sha512",
     "C:\\Users\\talax\\.nuget\\packages\\ironpdf.slim\\2024.3.4\\ironpdf.slim.2024.3.4.nupkg.sha512",

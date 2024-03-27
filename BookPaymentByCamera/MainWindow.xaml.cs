@@ -234,6 +234,8 @@ namespace BookPaymentByCamera
         private List<string> OcrScan(string imageUrl)
         {
             var ironOcr = new IronTesseract();
+            ironOcr.AddSecondaryLanguage(OcrLanguage.English);
+            ironOcr.AddSecondaryLanguage(OcrLanguage.Vietnamese);
             var image = new System.Drawing.Bitmap(imageUrl);
             var result = ironOcr.Read(image);
             Paragraph paragraph = new Paragraph(new Run(result.Text));
