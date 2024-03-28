@@ -334,6 +334,35 @@
           }
         }
       },
+      "IronOcr.ComputerVision.Windows/2022.11.10820": {
+        "runtimeTargets": {
+          "runtimes/win-x64/native/OpenCv.deployment.json": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/OpenCvInterop.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/OpenCv.deployment.json": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/OpenCvInterop.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "IronOcr.Languages.Vietnamese/2020.11.2": {
+        "dependencies": {
+          "IronOcr": "2024.3.4"
+        }
+      },
       "IronPdf/2024.3.4": {
         "dependencies": {
           "IronPdf.Native.Chrome.Windows": "2024.3.24",
@@ -2890,6 +2919,20 @@
       "sha512": "sha512-YxYlyvOM9UyITtr2HnDNhsw37erg5irJw4jEd2V3+txHXtri5l1hpVHaTkVdubQO2GFg3pvpSboYVNWdAabb6A==",
       "path": "ironocr/2024.3.4",
       "hashPath": "ironocr.2024.3.4.nupkg.sha512"
+    },
+    "IronOcr.ComputerVision.Windows/2022.11.10820": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-G/US8/h7uteX3YNPME+ppHxiUOW+1J8YgshtA+cGdFxeFKAxf2jnUBGBv1hH+EJFChCxvKsJmXoAVZ9QPhtWfA==",
+      "path": "ironocr.computervision.windows/2022.11.10820",
+      "hashPath": "ironocr.computervision.windows.2022.11.10820.nupkg.sha512"
+    },
+    "IronOcr.Languages.Vietnamese/2020.11.2": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3Yh5rK2BafNotVidQFf7wJU99b5MaGD+ExoKWSB1Chv1Dnz/kYnCHgGZaM8zywVmDWRW5IBD1iPDu02DJEEmIQ==",
+      "path": "ironocr.languages.vietnamese/2020.11.2",
+      "hashPath": "ironocr.languages.vietnamese.2020.11.2.nupkg.sha512"
     },
     "IronPdf/2024.3.4": {
       "type": "package",

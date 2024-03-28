@@ -365,6 +365,36 @@
           }
         }
       },
+      "IronOcr.ComputerVision.Windows/2022.11.10820": {
+        "type": "package",
+        "compile": {
+          "lib/netstandard2.0/_._": {}
+        },
+        "runtime": {
+          "lib/netstandard2.0/_._": {}
+        },
+        "build": {
+          "build/IronOcr.ComputerVision.Windows.targets": {}
+        },
+        "runtimeTargets": {
+          "runtimes/win-x64/native/OpenCv.deployment.json": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x64/native/OpenCvInterop.dll": {
+            "assetType": "native",
+            "rid": "win-x64"
+          },
+          "runtimes/win-x86/native/OpenCv.deployment.json": {
+            "assetType": "native",
+            "rid": "win-x86"
+          },
+          "runtimes/win-x86/native/OpenCvInterop.dll": {
+            "assetType": "native",
+            "rid": "win-x86"
+          }
+        }
+      },
       "IronOcr.Languages.Vietnamese/2020.11.2": {
         "type": "package",
         "dependencies": {
@@ -3560,6 +3590,30 @@
         "runtimes/win-x86/native/osd.traineddata",
         "runtimes/win-x86/native/pdf.ttf",
         "runtimes/win-x86/native/pdf.ttx"
+      ]
+    },
+    "IronOcr.ComputerVision.Windows/2022.11.10820": {
+      "sha512": "G/US8/h7uteX3YNPME+ppHxiUOW+1J8YgshtA+cGdFxeFKAxf2jnUBGBv1hH+EJFChCxvKsJmXoAVZ9QPhtWfA==",
+      "type": "package",
+      "path": "ironocr.computervision.windows/2022.11.10820",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "EULA.txt",
+        "LICENSE.txt",
+        "README.txt",
+        "build/IronOcr.ComputerVision.Windows.targets",
+        "content/Models/DB_TD500_resnet50.onnx",
+        "docs/README.md",
+        "images/iron-logo-128.png",
+        "ironocr.computervision.windows.2022.11.10820.nupkg.sha512",
+        "ironocr.computervision.windows.nuspec",
+        "lib/net/_._",
+        "lib/netstandard2.0/_._",
+        "runtimes/win-x64/native/OpenCv.deployment.json",
+        "runtimes/win-x64/native/OpenCvInterop.dll",
+        "runtimes/win-x86/native/OpenCv.deployment.json",
+        "runtimes/win-x86/native/OpenCvInterop.dll"
       ]
     },
     "IronOcr.Languages.Vietnamese/2020.11.2": {
@@ -8252,6 +8306,7 @@
       "BookPaymentByCamera.Repo >= 1.0.0",
       "Google.Apis.Drive.v3 >= 1.67.0.3309",
       "IronOcr >= 2024.3.4",
+      "IronOcr.ComputerVision.Windows >= 2022.11.10820",
       "IronOcr.Languages.Vietnamese >= 2020.11.2",
       "IronPdf >= 2024.3.4",
       "System.Drawing.Common >= 8.0.2"
@@ -8319,6 +8374,10 @@
           "IronOcr": {
             "target": "Package",
             "version": "[2024.3.4, )"
+          },
+          "IronOcr.ComputerVision.Windows": {
+            "target": "Package",
+            "version": "[2022.11.10820, )"
           },
           "IronOcr.Languages.Vietnamese": {
             "target": "Package",

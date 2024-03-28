@@ -296,3 +296,8 @@ D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCa
 D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\obj\Debug\net6.0-windows\BookPaymentByCamera.genruntimeconfig.cache
 D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\obj\Debug\net6.0-windows\ref\BookPaymentByCamera.dll
 D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\OcrData\Vietnamese.ocrdata
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\runtimes\win-x64\native\OpenCv.deployment.json
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\runtimes\win-x64\native\OpenCvInterop.dll
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\runtimes\win-x86\native\OpenCv.deployment.json
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\runtimes\win-x86\native\OpenCvInterop.dll
+D:\StudyDocuments\PRN221\GroupProject\PRN221_BookPaymentByCamera\BookPaymentByCamera\bin\Debug\net6.0-windows\Models\DB_TD500_resnet50.onnx

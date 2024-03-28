@@ -145,6 +145,10 @@
               "target": "Package",
               "version": "[2024.3.4, )"
             },
+            "IronOcr.ComputerVision.Windows": {
+              "target": "Package",
+              "version": "[2022.11.10820, )"
+            },
             "IronOcr.Languages.Vietnamese": {
               "target": "Package",
               "version": "[2020.11.2, )"

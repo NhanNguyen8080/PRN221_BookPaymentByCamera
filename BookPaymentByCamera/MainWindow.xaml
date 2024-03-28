@@ -25,25 +25,26 @@
             </ListView.View>
         </ListView>
 
-        <Image x:Name="imgWebcam" Height="296" Margin="0,10,469,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="557" Grid.Column="1"/>
-        <Button x:Name="btnCapture" Content="Capture" Margin="0,0,555,422" Height="36" VerticalAlignment="Bottom" Click="btnCapture_Click" HorizontalAlignment="Right" Width="155" RenderTransformOrigin="-2.598,-0.806" Grid.Column="1"/>
-        <Button x:Name="btnStartStop" Content="Start" Margin="0,0,797,422" Click="btnStartStop_Click" HorizontalAlignment="Right" Width="135" Height="36" VerticalAlignment="Bottom" Grid.Column="1"/>
-        <ListView x:Name="lvPayment" Margin="585,10,10,339" Grid.Column="4">
+        <Image x:Name="imgWebcam" Height="378" Margin="0,10,404,0" VerticalAlignment="Top" HorizontalAlignment="Right" Width="622" Grid.Column="1"/>
+        <Button x:Name="btnCapture" Content="Capture" Margin="0,0,524,331" Height="36" VerticalAlignment="Bottom" Click="btnCapture_Click" HorizontalAlignment="Right" Width="156" RenderTransformOrigin="-2.598,-0.806" Grid.Column="1"/>
+        <Button x:Name="btnStartStop" Content="Start" Margin="0,0,797,331" Click="btnStartStop_Click" HorizontalAlignment="Right" Width="135" Height="36" VerticalAlignment="Bottom" Grid.Column="1"/>
+        <ListView x:Name="lvPayment" Margin="650,10,10,191" Grid.Column="1">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn Header="Book Name" Width="150" DisplayMemberBinding="{Binding Path=bookName}"/>
-                    <GridViewColumn Header="Book Price" Width="150" DisplayMemberBinding="{Binding Path=bookPrice}"/>
-                    <GridViewColumn Header="Quantity" Width="150" DisplayMemberBinding="{Binding Path=quantity}"/>
+                    <GridViewColumn Header="Book Name" Width="150" DisplayMemberBinding="{Binding Path=BookName}"/>
+                    <GridViewColumn Header="Price" Width="50" DisplayMemberBinding="{Binding Path=BookPrice}"/>
+                    <GridViewColumn Header="Quantity" Width="80" DisplayMemberBinding="{Binding Path=Quantity}"/>
+                    <GridViewColumn Header="Total                  " Width="150" DisplayMemberBinding="{Binding Path=Total}"/>
                 </GridView>
             </ListView.View>
         </ListView>
-        <Label x:Name="lblTotal" Content="Total" HorizontalAlignment="Left" Margin="610,458,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="30" Grid.Column="1"/>
-        <Label x:Name="lblTotalPrice" Content="" HorizontalAlignment="Left" Margin="812,462,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Width="80" Grid.Column="1" RenderTransformOrigin="4.025,2.901"/>
-        <Button x:Name="btnPayment" Content="Payment" Margin="0,0,126,215" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="222" RenderTransformOrigin="-2.598,-0.806" Click="btnPayment_Click" Grid.Column="1"/>
-        <ListView x:Name="lvDetail" Margin="0,509,386,106" Grid.Column="1">
+        <Label x:Name="lblTotal" Content="Total" HorizontalAlignment="Left" Margin="650,598,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="30" Grid.Column="1"/>
+        <Label x:Name="lblTotalPrice" Content="0" HorizontalAlignment="Left" Margin="959,606,0,0" VerticalAlignment="Top" FontWeight="Bold" FontSize="24" Width="80" Grid.Column="1" RenderTransformOrigin="4.025,2.901"/>
+        <Button x:Name="btnPayment" Content="Payment" Margin="0,0,83,56" Height="60" VerticalAlignment="Bottom" HorizontalAlignment="Right" Width="222" RenderTransformOrigin="-2.598,-0.806" Click="btnPayment_Click" Grid.Column="1"/>
+        <ListView x:Name="lvDetail" Margin="193,513,404,56" Grid.ColumnSpan="2">
             <ListView.View>
                 <GridView>
-                    <GridViewColumn DisplayMemberBinding="{Binding bookName}" Header="Book Name" Width="180"/>
+                    <GridViewColumn DisplayMemberBinding="{Binding bookName}" Header="Book Name" Width="300"/>
                     <GridViewColumn DisplayMemberBinding="{Binding bookPrice}" Header="Price" Width="50"/>
                     <GridViewColumn DisplayMemberBinding="{Binding authorName}" Header="Author" Width="120"/>
                     <GridViewColumn DisplayMemberBinding="{Binding publisherName}" Header="Publisher" Width="200"/>

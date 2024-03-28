@@ -3,6 +3,7 @@ using AForge.Video.DirectShow;
 using BookPaymentByCamera.Repo.Implements;
 using BookPaymentByCamera.Repo.Interfaces;
 using IronOcr;
+using IronSoftware.Drawing;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
@@ -37,6 +38,7 @@ namespace BookPaymentByCamera
         public string BookName { get; set; }
         public decimal BookPrice { get; set; }
         public int Quantity { get; set; }
+        public decimal? Total { get; set; }
     }
     public partial class MainWindow : Window
     {
@@ -48,6 +50,24 @@ namespace BookPaymentByCamera
         string workingDirectory;
         string rootFolderPath;
         string folderPath;
+        private static readonly string[] VietnameseSigns = new string[]
+        {
+            "aAeEoOuUiIdDyY",
+            "áàạảãâấầậẩẫăắằặẳẵ",
+            "ÁÀẠẢÃÂẤẦẬẨẪĂẮẰẶẲẴ",
+            "éèẹẻẽêếềệểễ",
+            "ÉÈẸẺẼÊẾỀỆỂỄ",
+            "óòọỏõôốồộổỗơớờợởỡ",
+            "ÓÒỌỎÕÔỐỒỘỔỖƠỚỜỢỞỠ",
+            "úùụủũưứừựửữ",
+            "ÚÙỤỦŨƯỨỪỰỬỮ",
+            "íìịỉĩ",
+            "ÍÌỊỈĨ",
+            "đ",
+            "Đ",
+            "ýỳỵỷỹ",
+            "ÝỲỴỶỸ"
+        };
 
         public MainWindow()
         {
@@ -196,31 +216,35 @@ namespace BookPaymentByCamera
                     //int count = 1;
 
                     var ocrList = OcrScan(filePath);
-                    
-				    foreach (var item in ocrList)
+                    bool found = false;
+                    foreach (var item in ocrList)
                     {
                         if (!string.IsNullOrEmpty(item))
                         {
-                            var check = unitOfWork.BookRepository.Get(_ => _.BookName.ToLower().Contains(item.ToLower()), null, "Author,Publisher").FirstOrDefault();
-                            if (check != null)
+                            var itemCheck = RemoveSign4VietnameseString(item).ToLower();
+                            //var check = unitOfWork.BookRepository.Get(_ => RemoveSign4VietnameseString(_.BookName).ToLower().Contains(itemCheck), null, "Author,Publisher").FirstOrDefault();
+                            var items = unitOfWork.BookRepository.Get(null, null, "Author,Publisher").ToList();
+                            var check = items.Where(b => RemoveSign4VietnameseString(b.BookName).ToLower().Contains(itemCheck)).FirstOrDefault();
+                            if (check != null && found == false)
                             {
-                                listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
-                                listBooksPayment.Add(new BookDTOPayment() { BookName = check.BookName, BookPrice = (decimal)check.BookPrice });
-                                foreach (BookDTOPayment book in listBooksPayment)
+                                var checkExistBook = listBooks.Where(_ => _.bookName.Equals(check.BookName)).FirstOrDefault();
+                                if (checkExistBook == null)
                                 {
-                                    if (book.bookName == check.BookName)
-                                    {
-                                        book.quantity++;
-                                    }
-                                    else
-                                    {
-                                        listBooksPayment.Add(new BookDTOPayment() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, quantity = 1 });
-                                    }
-
-
-                                    lvDetail.ItemsSource = listBooks;
-                                    lvPayment.ItemsSource = listBooksPayment;
+                                    listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
                                 }
+
+                                var checkExistBookPayment = listBooksPayment.Where(_ => _.BookName.Equals(check.BookName)).FirstOrDefault();
+                                if (checkExistBookPayment == null)
+                                {
+                                    listBooksPayment.Add(new BookDTOPayment() { BookName = check.BookName, BookPrice = (decimal)check.BookPrice, Quantity = 1, Total = check.BookPrice * 1 });
+                                }
+                                else
+                                {
+                                    ++checkExistBookPayment.Quantity;
+                                    checkExistBookPayment.Total = checkExistBookPayment.BookPrice * checkExistBookPayment.Quantity;
+                                }
+                                
+                                found = true;
                             }
                         }
                     }
@@ -228,10 +252,10 @@ namespace BookPaymentByCamera
                     lvDetail.ItemsSource = null;
                     lvPayment.ItemsSource = listBooksPayment;
                     lvDetail.ItemsSource = listBooks;
-                    decimal totalPrice = 0;
-                    foreach (var price in listBooksPayment)
+                    decimal? totalPrice = 0;
+                    foreach (var book in listBooksPayment)
                     {
-                        totalPrice += price.BookPrice;
+                        totalPrice += book.Total;
                     }
                     lblTotalPrice.Content = totalPrice.ToString();
 
@@ -249,14 +273,30 @@ namespace BookPaymentByCamera
 
         }
 
+        public static string RemoveSign4VietnameseString(string str)
+        {
+            for (int i = 1; i < VietnameseSigns.Length; i++)
+            {
+                for (int j = 0; j < VietnameseSigns[i].Length; j++)
+                {
+                    str = str.Replace(VietnameseSigns[i][j], VietnameseSigns[0][i - 1]);
+                }
+            }
+            return str;
+        }
+
         private List<string> OcrScan(string imageUrl)
         {
             var ironOcr = new IronTesseract();
             ironOcr.AddSecondaryLanguage(OcrLanguage.English);
             ironOcr.AddSecondaryLanguage(OcrLanguage.Vietnamese);
-            var image = new System.Drawing.Bitmap(imageUrl);
-            var result = ironOcr.Read(image);
-            Paragraph paragraph = new Paragraph(new Run(result.Text));
+            //var image = new System.Drawing.Bitmap(imageUrl);
+            using var imageInput = new OcrInput();
+            imageInput.LoadImage("D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages\\Screenshot 2024-03-28 211143.png");
+            System.Drawing.Rectangle textCropArea = imageInput.GetPages().First().FindTextRegion();
+            var stamp = imageInput.StampCropRectangleAndSaveAs(textCropArea, System.Drawing.Color.Red, folderPath + "\\image_text_area", AnyBitmap.ImageFormat.Png);
+            OcrResult result = ironOcr.Read("D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera\\CapturedImages\\Screenshot 2024-03-28 211143.png", textCropArea);
+            //Paragraph paragraph = new Paragraph(new Run(result.Text));
             //rtxtOcr.Document.Blocks.Add(paragraph);
 
             string[] lines = result.Text.Split(new char[] { '\n' });
