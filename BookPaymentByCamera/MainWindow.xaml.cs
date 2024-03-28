@@ -36,6 +36,7 @@ namespace BookPaymentByCamera
     {
         public string BookName { get; set; }
         public decimal BookPrice { get; set; }
+        public int Quantity { get; set; }
     }
     public partial class MainWindow : Window
     {
@@ -192,6 +193,8 @@ namespace BookPaymentByCamera
                     List<ImageModel> list = GetImageModels(folderPath);
                     lvImage.ItemsSource = list;
 
+                    //int count = 1;
+
                     var ocrList = OcrScan(filePath);
                     
 				    foreach (var item in ocrList)
@@ -203,7 +206,21 @@ namespace BookPaymentByCamera
                             {
                                 listBooks.Add(new BookDTO() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, authorName = check.Author.FullName, publisherName = check.Publisher.Name });
                                 listBooksPayment.Add(new BookDTOPayment() { BookName = check.BookName, BookPrice = (decimal)check.BookPrice });
-                                
+                                foreach (BookDTOPayment book in listBooksPayment)
+                                {
+                                    if (book.bookName == check.BookName)
+                                    {
+                                        book.quantity++;
+                                    }
+                                    else
+                                    {
+                                        listBooksPayment.Add(new BookDTOPayment() { bookName = check.BookName, bookPrice = (decimal)check.BookPrice, quantity = 1 });
+                                    }
+
+
+                                    lvDetail.ItemsSource = listBooks;
+                                    lvPayment.ItemsSource = listBooksPayment;
+                                }
                             }
                         }
                     }
@@ -212,11 +229,12 @@ namespace BookPaymentByCamera
                     lvPayment.ItemsSource = listBooksPayment;
                     lvDetail.ItemsSource = listBooks;
                     decimal totalPrice = 0;
-                    foreach(var price in listBooksPayment)
+                    foreach (var price in listBooksPayment)
                     {
                         totalPrice += price.BookPrice;
                     }
                     lblTotalPrice.Content = totalPrice.ToString();
+
                 }
 
                 else
@@ -250,55 +268,6 @@ namespace BookPaymentByCamera
             }
             return cleanedList;
         }
-
-        //private void PaymentCheck()
-        //{
-        //    List<BookDTO> books = new List<BookDTO>();
-        //    foreach (var item in lvPayment.Items)
-        //    {
-        //        if (!(item == null))
-        //        {
-        //            books.Add(new BookDTO
-        //            {
-
-        //            });
-        //        }
-        //    }
-
-        //    //save invoice
-        //    string invoiceFilePath = SaveInvoiceToPdf(books);
-        //    // Reset payment list
-        //    lvPayment.Items.Clear();
-        //    // Open the invoice PDF
-        //    if (File.Exists(invoiceFilePath))
-        //    {
-        //        System.Diagnostics.Process.Start(invoiceFilePath);
-        //    }
-        //    else
-        //    {
-        //        System.Windows.MessageBox.Show("Invoice not found.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-        //    }
-        //}
-
-        //private string SaveInvoiceToPdf(List<BookDTO> books)
-        //{
-        //    // Create a new PDF document
-        //    var pdf = new IronPdf.ChromePdfRenderer();
-
-        //    // Construct HTML content for the invoice
-        //    string htmlContent = "<h1>Invoice</h1><table><tr><th>Book Name</th><th>Author</th><th>Publisher</th><th>Price</th></tr>";
-        //    foreach (var book in books)
-        //    {
-        //        htmlContent += $"<tr><td>{book.bookName}</td><td>{book.authorName}</td><td>{book.publisherName}</td><td>{book.bookPrice}</td></tr>";
-        //    }
-        //    htmlContent += "</table>";
-
-        //    // Save HTML content to PDF file
-        //    string invoiceFilePath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "invoice.pdf");
-        //    pdf.RenderHtmlAsPdf(htmlContent).SaveAs(invoiceFilePath);
-
-        //    return invoiceFilePath;
-        //}
 
         // Method to save ListView data to PDF
         private void SaveToPDF(System.Windows.Controls.ListView listView)
