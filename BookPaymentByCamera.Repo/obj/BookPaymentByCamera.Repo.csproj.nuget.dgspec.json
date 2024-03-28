@@ -1,24 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj": {}
+    "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj": {}
   },
   "projects": {
-    "C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj": {
+    "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj",
+        "projectUniqueName": "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj",
         "projectName": "BookPaymentByCamera.Repo",
-        "projectPath": "C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj",
-        "packagesPath": "C:\\Users\\T14\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\T14\\source\\repos\\PRN221_BookPaymentByCamera-vunt(1)\\PRN221_BookPaymentByCamera-vunt\\BookPaymentByCamera.Repo\\obj\\",
+        "projectPath": "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera.Repo\\BookPaymentByCamera.Repo.csproj",
+        "packagesPath": "C:\\Users\\talax\\.nuget\\packages\\",
+        "outputPath": "D:\\StudyDocuments\\PRN221\\GroupProject\\PRN221_BookPaymentByCamera\\BookPaymentByCamera.Repo\\obj\\",
         "projectStyle": "PackageReference",
-        "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
-        ],
         "configFilePaths": [
-          "C:\\Users\\T14\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\talax\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -26,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -86,7 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.203\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
         }
       }
     }
